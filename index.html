@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Power — 欢迎页</title>
+  <meta name="description" content="Power 项目欢迎页" />
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --fg: #e8ecf4;
+      --muted: #8b93a7;
+      --accent: #4f8cff;
+      --accent-2: #7c5cff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(600px 400px at 20% 20%, rgba(79,140,255,.18), transparent 60%),
+        radial-gradient(600px 400px at 80% 80%, rgba(124,92,255,.15), transparent 60%);
+    }
+    main {
+      position: relative;
+      text-align: center;
+      padding: 2rem;
+      max-width: 640px;
+      animation: rise .8s ease both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .badge {
+      display: inline-block;
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      padding: .35rem .9rem;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+    }
+    h1 .grad {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    p.lead {
+      margin-top: 1rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+    .actions { margin-top: 2.2rem; display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+    a.btn {
+      text-decoration: none;
+      font-size: .95rem;
+      padding: .7rem 1.5rem;
+      border-radius: 10px;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    a.btn:hover { transform: translateY(-2px); }
+    a.primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      box-shadow: 0 6px 24px rgba(79,140,255,.35);
+    }
+    a.ghost {
+      color: var(--fg);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    footer {
+      position: fixed;
+      bottom: 1.2rem;
+      width: 100%;
+      text-align: center;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    footer a { color: inherit; text-decoration: none; }
+    footer a:hover { color: var(--fg); }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <main>
+    <span class="badge">Welcome</span>
+    <h1>欢迎来到 <span class="grad">Power</span></h1>
+    <p class="lead">
+      这是 Power 项目的静态欢迎页。<br/>
+      每次向 <code>main</code> 分支推送代码，页面都会自动重新构建并上线。
+    </p>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/whatsday/power" target="_blank" rel="noopener">
+        查看仓库
+      </a>
+      <a class="btn ghost" href="https://github.com/whatsday/power/tree/main" target="_blank" rel="noopener">
+        浏览源码
+      </a>
+    </div>
+  </main>
+  <footer>
+    由 <a href="https://github.com/whatsday/power" target="_blank" rel="noopener">whatsday/power</a> 构建 · 每次 push 自动部署
+  </footer>
+</body>
+</html>
