@@ -3,125 +3,161 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Power — 欢迎页</title>
-  <meta name="description" content="Power 项目欢迎页" />
+  <title>今日 AI 新闻 TOP 10</title>
+  <meta name="description" content="2026年11月3日 人工智能领域十大要闻" />
   <style>
     :root {
       --bg: #0a0e1a;
+      --card: #111726;
       --fg: #e8ecf4;
       --muted: #8b93a7;
       --accent: #4f8cff;
       --accent-2: #7c5cff;
+      --line: rgba(255,255,255,.08);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
                    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       background: var(--bg);
       color: var(--fg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      min-height: 100vh;
     }
     .glow {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
+      position: fixed; inset: 0; pointer-events: none;
       background:
-        radial-gradient(600px 400px at 20% 20%, rgba(79,140,255,.18), transparent 60%),
-        radial-gradient(600px 400px at 80% 80%, rgba(124,92,255,.15), transparent 60%);
+        radial-gradient(700px 500px at 15% 0%, rgba(79,140,255,.16), transparent 60%),
+        radial-gradient(700px 500px at 85% 10%, rgba(124,92,255,.14), transparent 60%);
     }
-    main {
+    .wrap {
       position: relative;
-      text-align: center;
-      padding: 2rem;
-      max-width: 640px;
-      animation: rise .8s ease both;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 4rem 1.25rem 4rem;
     }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: none; }
-    }
-    .badge {
+    header { text-align: center; margin-bottom: 2.5rem; animation: rise .6s ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px);} to { opacity: 1; transform: none;} }
+    .date {
       display: inline-block;
-      font-size: .78rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
+      font-size: .8rem; letter-spacing: .15em;
       color: var(--muted);
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid var(--line);
       border-radius: 999px;
-      padding: .35rem .9rem;
-      margin-bottom: 1.5rem;
+      padding: .35rem 1rem;
+      margin-bottom: 1.1rem;
     }
-    h1 {
-      font-size: clamp(2.4rem, 6vw, 3.8rem);
-      font-weight: 700;
-      line-height: 1.15;
-    }
+    h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 700; }
     h1 .grad {
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-    p.lead {
-      margin-top: 1rem;
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
+    ol.news { list-style: none; display: grid; gap: .9rem; }
+    li.item {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      transition: transform .15s ease, border-color .15s ease;
+      animation: rise .5s ease both;
     }
-    .actions { margin-top: 2.2rem; display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
-    a.btn {
-      text-decoration: none;
-      font-size: .95rem;
-      padding: .7rem 1.5rem;
-      border-radius: 10px;
-      transition: transform .15s ease, box-shadow .15s ease;
-    }
-    a.btn:hover { transform: translateY(-2px); }
-    a.primary {
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: #fff;
-      box-shadow: 0 6px 24px rgba(79,140,255,.35);
-    }
-    a.ghost {
-      color: var(--fg);
-      border: 1px solid rgba(255,255,255,.18);
-    }
-    footer {
-      position: fixed;
-      bottom: 1.2rem;
-      width: 100%;
+    li.item:hover { transform: translateY(-2px); border-color: rgba(79,140,255,.45); }
+    .num {
+      font-size: 1.6rem; font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
       text-align: center;
-      font-size: .8rem;
-      color: var(--muted);
     }
-    footer a { color: inherit; text-decoration: none; }
-    footer a:hover { color: var(--fg); }
+    .item h2 { font-size: 1.02rem; font-weight: 600; line-height: 1.5; margin-bottom: .45rem; }
+    .item p { font-size: .9rem; color: var(--muted); line-height: 1.7; }
+    @media (max-width: 520px) {
+      li.item { grid-template-columns: 40px 1fr; }
+      .num { font-size: 1.3rem; }
+    }
   </style>
 </head>
 <body>
   <div class="glow"></div>
-  <main>
-    <span class="badge">Welcome</span>
-    <h1>欢迎来到 <span class="grad">Power</span></h1>
-    <p class="lead">
-      这是 Power 项目的静态欢迎页。<br/>
-      每次向 <code>main</code> 分支推送代码，页面都会自动重新构建并上线。
-    </p>
-    <div class="actions">
-      <a class="btn primary" href="https://github.com/whatsday/power" target="_blank" rel="noopener">
-        查看仓库
-      </a>
-      <a class="btn ghost" href="https://github.com/whatsday/power/tree/main" target="_blank" rel="noopener">
-        浏览源码
-      </a>
-    </div>
-  </main>
-  <footer>
-    由 <a href="https://github.com/whatsday/power" target="_blank" rel="noopener">whatsday/power</a> 构建 · 每次 push 自动部署
-  </footer>
+  <div class="wrap">
+    <header>
+      <span class="date">2026 年 11 月 3 日 · 星期二</span>
+      <h1>今日 <span class="grad">AI 新闻 TOP 10</span></h1>
+    </header>
+    <ol class="news">
+      <li class="item">
+        <div class="num">1</div>
+        <div>
+          <h2>Anthropic 修订版 S-1：Q3 营收 169.6 亿美元，算力承诺高达 8954 亿美元</h2>
+          <p>面向 IPO 的修订文件披露 Anthropic 第三季度营收约 169.6 亿美元（同比增长约 11 倍），净亏损 232.9 亿美元；累计算力与基础设施采购承诺约 8954 亿美元，其中约 698 亿美元将在未来 12 个月内支付。</p>
+        </div>
+      </li>
+      <li class="item">
+        <div class="num">2</div>
+        <div>
+          <h2>Apple 智能 12 月登陆中国，Siri 由阿里 Qwen 驱动</h2>
+          <p>苹果宣布国行 Apple 智能随 iOS 27.3 于 12 月推送，Siri、写作工具与视觉智能接入阿里千问模型，11 月 4 日起开发者 Beta 先行测试；阿里承诺不使用用户交互数据训练模型，消息公布后股价上涨约 6%。</p>
+        </div>
+      </li>
+      <li class="item">
+        <div class="num">3</div>
+        <div>
+          <h2>Mistral 开源万亿参数 Large 4「Le Chonk」，编码 Agent 基准登顶</h2>
+          <p>Mistral 公布 1 万亿参数多模态 MoE 模型 Large 4 权重（每 token 激活约 52B 参数），在 Artificial Analysis 编码 Agent 指数上领先全部开源模型，同时 token 消耗减少 47%。</p>
+        </div>
+      </li>
+      <li class="item">
+        <div class="num">4</div>
+        <div>
+          <h2>Salesforce 拟以 27 亿美元收购语音智能体公司 Cresta</h2>
+          <p>据 The Information 报道，Salesforce 已签署收购 Cresta 的协议，金额约 27 亿美元。Cresta 的语音智能体可端到端处理复杂客服电话（含用户插话场景），是 Salesforce 客服 AI 版图的又一关键落子。</p>
+        </div>
+      </li>
+      <li class="item">
+        <div class="num">5</div>
+        <div>
+          <h2>Marvell 1150 亿美元全股票收购 Lumentum，加码 AI 光互连</h2>
+          <p>Marvell 宣布以全股票方式收购光通信厂商 Lumentum，企业估值约 1150 亿美元，预计 2028 年上半年完成交割，合并后年成本协同超 10 亿美元，瞄准 5500 亿美元的光互连市场。</p>
+        </div>
+      </li>
+      <li class="item">
+        <div class="num">6</div>
+        <div>
+          <h2>沙特阿美 26 亿美元拿下 Humain 49% 股权，绑定 3GW AI 算力</h2>
+          <p>沙特阿美完成对沙特主权支持的 AI 公司 Humain 49% 股权的交易，PIF 保留 51%。Humain 计划到 2030 年部署 3 吉瓦 AI 数据中心算力，将石油收入与 AI 基建深度挂钩。</p>
+        </div>
+      </li>
+      <li class="item">
+        <div class="num">7</div>
+        <div>
+          <h2>美国司法部就 NVIDIA 129.3 亿美元收购 Hugging Face 启动反垄断调查</h2>
+          <p>DOJ 审查 NVIDIA 收购 Hugging Face（300 万模型、1800 万开发者）是否会将其芯片主导地位延伸至开源模型分发领域，同时关注其 170 亿美元 Groq 许可协议等交易；原定的 2027 年上半年交割受到不确定性影响。</p>
+        </div>
+      </li>
+      <li class="item">
+        <div class="num">8</div>
+        <div>
+          <h2>OpenAI 启动「Grid Protectors」：极端天气可释放 1000MW 电网余量</h2>
+          <p>OpenAI 在佐治亚州 Effingham 县园区试点电网保护计划，紧急时刻可让出最多 1000 兆瓦电力（约相当于 70 万户家庭用电），并承担全部基础设施与电力服务成本；Georgia Power 预计 2029 年起每年为客户节省约 9.5 亿美元。</p>
+        </div>
+      </li>
+      <li class="item">
+        <div class="num">9</div>
+        <div>
+          <h2>微软发行 250 亿美元债券为 AI 基建融资，Azure 单季增长 48%</h2>
+          <p>微软启动 250 亿美元美国债券发行——2017 年以来首次美债融资，专项用于 AI 基础设施。上季度 Azure 收入达 331.7 亿美元、同比增长 48%，剩余履约义务增长 73% 至 6770 亿美元。</p>
+        </div>
+      </li>
+      <li class="item">
+        <div class="num">10</div>
+        <div>
+          <h2>中国拟对前沿模型权重与智能体架构实施出口管制</h2>
+          <p>商务部与科技部联合提案，将 23 项 AI 技术列入出口限制目录，首次为前沿模型权重、自主智能体架构与 AI 网络攻击能力设定明确技术门槛；草案公开征求意见至 11 月 15 日，临时出口登记要求已即时生效。</p>
+        </div>
+      </li>
+    </ol>
+  </div>
 </body>
 </html>
