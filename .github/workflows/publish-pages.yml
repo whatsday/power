@@ -1,0 +1,57 @@
+name: publish-pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  sync-publish:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: publish-sync
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Assemble clean site content
+        run: |
+          set -euo pipefail
+          CONTENT="$(mktemp -d)"
+          echo "$CONTENT" > "$RUNNER_TEMP/site-content-path"
+          if [ -d dist ]; then
+            # 未来若 main 引入构建步骤（npm run build -> dist/），自动改发构建产物
+            cp -r dist/. "$CONTENT"/
+          else
+            tar -cf - \
+              --exclude=.git --exclude=.github \
+              --exclude=README.md --exclude=LICENSE \
+              -C . . | tar -xf - -C "$CONTENT"
+          fi
+          echo "Files to publish:"; find "$CONTENT" -type f | sort
+
+      - name: Push clean 'publish' branch
+        run: |
+          set -euo pipefail
+          CONTENT="$(cat "$RUNNER_TEMP/site-content-path")"
+          cd "$GITHUB_WORKSPACE"
+          git config user.name  "publish-bot"
+          git config user.email "publish-bot@users.noreply.github.com"
+          if git fetch --depth=1 origin publish:publish 2>/dev/null; then
+            git checkout publish
+          else
+            git checkout --orphan publish
+            git reset -q
+          fi
+          # 清空发布分支的旧内容（保留 .git），写入干净站点文件
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          cp -r "$CONTENT"/. .
+          git add -A
+          if git diff --cached --quiet; then
+            echo "publish branch already in sync with main — nothing to deploy"
+          else
+            git commit -m "publish: sync site from main @${GITHUB_SHA:0:8}"
+            git push origin publish
+          fi
